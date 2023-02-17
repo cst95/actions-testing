@@ -8,4 +8,4 @@ on:
 jobs:
   check_if_default_branch:
     name: Check if default branch
-    uses: ./.github/workflows/check-if-default-branch
+    uses: ./.github/workflows/check-if-default-branch.yml
