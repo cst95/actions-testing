@@ -1,0 +1,11 @@
+name: Test reusable workflow
+on: 
+  push:
+    branches:
+      - main
+  pull_request:      
+
+jobs:
+  check_if_default_branch:
+    name: Check if default branch
+    uses: ./.github/workflows/check-if-default-branch

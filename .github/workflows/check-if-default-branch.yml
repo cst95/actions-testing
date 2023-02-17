@@ -3,10 +3,10 @@ on:
   workflow_call:    
 
 jobs:
-  check_branch:
+  check_if_default_branch:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
         name: Checkout
       - uses: ./.github/actions/is-default-branch
-        name: Check branch
+        name: Is default branch
