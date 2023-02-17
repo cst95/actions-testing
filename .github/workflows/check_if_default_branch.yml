@@ -1,0 +1,15 @@
+name: Check if default branch
+on: 
+  push:
+    branches:
+      - main
+  pull_request:      
+
+jobs:
+  check_branch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        name: Checkout
+      - uses: ./.github/actions/is-default-branch
+        name: Check branch

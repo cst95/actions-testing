@@ -1,0 +1,7 @@
+name: 'Is Default Branch'
+description: 'Is the workflow running on the default branch'
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      run: echo ${{ github.event.repository.default_branch }}
