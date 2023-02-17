@@ -1,0 +1,18 @@
+name: 'Get execution context'
+description: 'Get context on the current workflow executon'
+
+outputs:
+  is-default-branch:
+    description: "Is the workflow currently executing on the default branch"
+    value: ${{ steps.check.outputs.is_default_branch }}
+
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      id: check
+      run: |
+        echo "Current branch: ${{ github.ref }}" >> $GITHUB_STEP_SUMMARY
+        echo "Default branch: ${{ format('refs/heads/{0}', github.event.repository.default_branch) }}" >> $GITHUB_STEP_SUMMARY
+        echo "Is default branch: ${{ format('refs/heads/{0}', github.event.repository.default_branch) == github.ref }}" >> $GITHUB_STEP_SUMMARY
+        echo "is_default_branch=${{ format('refs/heads/{0}', github.event.repository.default_branch) == github.ref }}" >> $GITHUB_OUTPUT

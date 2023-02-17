@@ -1,12 +1,22 @@
 name: Check if default branch
+
 on: 
   workflow_call:    
 
 jobs:
   check_if_default_branch:
+    name: Check if running on default branch
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
         name: Checkout
-      - uses: ./.github/actions/is-default-branch
-        name: Is default branch
+      
+      - uses: ./.github/actions/get-execution-context
+        name: Get execution context
+        id: get-execution-context
+      
+      - if: steps.get-execution-context.outputs.is_default_branch == 'true'
+        run: echo "Running on default branch!!" >> $GITHUB_STEP_SUMMARY
+      
+      - if: steps.get-execution-context.outputs.is-default-branch == 'false'
+        run: echo "Not running on default branch." >> $GITHUB_STEP_SUMMARY
