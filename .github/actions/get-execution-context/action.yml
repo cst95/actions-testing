@@ -9,8 +9,8 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: check
-      shell: bash
+    - shell: bash
+      id: check
       run: |
         echo "Current branch: ${{ github.ref }}" >> $GITHUB_STEP_SUMMARY
         echo "Default branch: ${{ format('refs/heads/{0}', github.event.repository.default_branch) }}" >> $GITHUB_STEP_SUMMARY
