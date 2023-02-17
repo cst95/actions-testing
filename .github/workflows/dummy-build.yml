@@ -2,6 +2,10 @@ name: Check if default branch
 
 on: 
   workflow_call:    
+    inputs:
+      no-bump-message:
+        required: true
+        type: string
 
 jobs:
   dummy-build:
@@ -14,6 +18,8 @@ jobs:
       - uses: ./.github/actions/make-build-decision
         name: Make build decision
         id: make-build-decision
+        with:
+          no-bump-message: ${{ inputs.no-bump-message}}
       
       - if: steps.make-build-decision.outputs.should-build == 'true'
         run: echo "Proceed with build!!" >> $GITHUB_STEP_SUMMARY
