@@ -1,4 +1,5 @@
 name: Check if default branch
+
 on: 
   workflow_call:    
 
@@ -8,10 +9,13 @@ jobs:
     steps:
       - uses: actions/checkout@v1
         name: Checkout
+      
       - uses: ./.github/actions/get-execution-context
         name: Get execution context
-        id: get-exeution-context
+        id: get-execution-context
+      
       - if: steps.get-execution-context.outputs.is_default_branch == 'true'
         run: echo "Running on default branch!!" >> $GITHUB_SUMMARY
+      
       - if: steps.get-execution-context.outputs.is_default_branch == 'false'
         run: echo "Not running on default branch." >> $GITHUB_SUMMARY

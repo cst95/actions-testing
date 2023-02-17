@@ -1,5 +1,6 @@
 name: 'Get execution context'
 description: 'Get context on the current workflow executon'
+
 outputs:
   is-default-branch:
     description: "Is the workflow currently executing on the default branch"
