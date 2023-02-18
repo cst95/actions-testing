@@ -28,4 +28,4 @@ runs:
 
     - if: steps.get-execution-context.outputs.is-default-branch != 'true'
       shell: bash
-      run: echo "should_build=false" >> $GITHUB_OUTPUT
+      run: echo "should_build=true" >> $GITHUB_OUTPUT
