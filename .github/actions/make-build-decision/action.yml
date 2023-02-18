@@ -17,7 +17,9 @@ runs:
     - id: get-execution-context
       uses: ./.github/actions/get-execution-context
 
-    - shell: bash
+    - if: steps.get-execution-context.outputs.is-default-branch == 'true'
+      shell: bash
       run: |
-        echo "${{ steps.get-execution-context.outputs.is-default-branch }}" >> $GITHUB_STEP_SUMMARY
-        echo "${{ inputs.no-bump-message }}" >> $GITHUB_STEP_SUMMARY
+        echo "Head commit message: ${{ github.event.head_commit.message }}" >> $GITHUB_STEP_SUMMARY
+        echo "No bump message: ${{ inputs.no-bump-message }}" >> $GITHUB_STEP_SUMMARY
+        echo "Head commit contains no bump message: ${{ github.event.head_commit.message == *inputs.no-bump-message" }}"
