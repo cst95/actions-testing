@@ -24,3 +24,4 @@ runs:
         echo "No bump message: ${{ inputs.no-bump-message }}" >> $GITHUB_STEP_SUMMARY
         echo "Head commit contains no bump message: ${{ contains(github.event.head_commit.message, inputs.no-bump-message) }}" >> $GITHUB_STEP_SUMMARY
         echo "should_build=${{ steps.get-execution-context.outputs.is-default-branch != 'true' || !contains(github.event.head_commit.message, inputs.no-bump-message) }}" >> $GITHUB_OUTPUT
+

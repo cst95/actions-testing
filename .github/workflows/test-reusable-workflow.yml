@@ -4,10 +4,15 @@ on:
   push:
     branches:
       - main
-      - master
   pull_request:      
 
 jobs:
-  check_if_default_branch:
+  check-if-default-branch:
     name: Check if default branch
     uses: ./.github/workflows/check-if-default-branch.yml
+
+  dummy-build:
+    name: Dummy build
+    uses: ./.github/workflows/dummy-build.yml
+    with:
+      no-bump-message: '#none'

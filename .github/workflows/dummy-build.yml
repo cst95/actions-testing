@@ -1,0 +1,28 @@
+name: Check if default branch
+
+on: 
+  workflow_call:    
+    inputs:
+      no-bump-message:
+        required: true
+        type: string
+
+jobs:
+  dummy-build:
+    name: Execute a dummy build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        name: Checkout
+      
+      - uses: ./.github/actions/make-build-decision
+        name: Make build decision
+        id: make-build-decision
+        with:
+          no-bump-message: ${{ inputs.no-bump-message}}
+      
+      - if: steps.make-build-decision.outputs.should-build == 'true'
+        run: echo "Proceed with build!!" >> $GITHUB_STEP_SUMMARY
+      
+      - if: steps.make-build-decision.outputs.should-build != 'true'
+        run: echo "Don't proceed with build." >> $GITHUB_STEP_SUMMARY
