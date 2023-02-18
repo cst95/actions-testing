@@ -17,6 +17,9 @@ runs:
     - id: get-execution-context
       uses: ./.github/actions/get-execution-context
 
+    - if: steps.get-execution-context.outputs.is-default-branch == 'false'
+      run: echo "should_build=false" >> $GITHUB_OUTPUT
+
     - if: steps.get-execution-context.outputs.is-default-branch == 'true'
       id: decide
       shell: bash
