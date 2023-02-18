@@ -21,8 +21,8 @@ jobs:
         with:
           no-bump-message: ${{ inputs.no-bump-message}}
       
-      - if: steps.make-build-decision.outputs.should-build == 'true'
+      - if: steps.make-build-decision.outputs.decision == 'build'
         run: echo "Proceed with build!!" >> $GITHUB_STEP_SUMMARY
       
-      - if: steps.make-build-decision.outputs.should-build != 'true'
+      - if: steps.make-build-decision.outputs.decision == 'skip'
         run: echo "Don't proceed with build." >> $GITHUB_STEP_SUMMARY
