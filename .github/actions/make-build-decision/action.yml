@@ -1,0 +1,25 @@
+name: 'Make build decision'
+description: 'Decide whether to execute a build or not'
+
+inputs:
+  no-bump-message:
+    description: 'Partial commit message that indicates build should not be executed'
+    required: true
+
+outputs:
+  should-build:
+    description: "Should a build be executed"
+    value: ${{ steps.check.outputs.should_build }}
+
+runs:
+  using: "composite"
+  steps:
+    - id: get-execution-context
+      uses: ./.github/actions/get-execution-context
+
+    - if: steps.get-execution-context.outputs.is-default-branch == 'true'
+      shell: bash
+      run: |
+        echo "Head commit message: ${{ github.event.head_commit.message }}" >> $GITHUB_STEP_SUMMARY
+        echo "No bump message: ${{ inputs.no-bump-message }}" >> $GITHUB_STEP_SUMMARY
+        echo "Head commit contains no bump message: ${{ contains(github.event.head_commit.message, inputs.no-bump-message) }}"
