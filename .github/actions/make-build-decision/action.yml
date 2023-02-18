@@ -22,4 +22,5 @@ runs:
       run: |
         echo "Head commit message: ${{ github.event.head_commit.message }}" >> $GITHUB_STEP_SUMMARY
         echo "No bump message: ${{ inputs.no-bump-message }}" >> $GITHUB_STEP_SUMMARY
-        echo "Head commit contains no bump message: ${{ contains(github.event.head_commit.message, inputs.no-bump-message) }}"
+        echo "Head commit contains no bump message: ${{ contains(github.event.head_commit.message, inputs.no-bump-message) }}" >> $GITHUB_STEP_SUMMARY
+        echo "should_build=${{ contains(github.event.head_commit.message, inputs.no-bump-message) }}" >> $GITHUB_OUTPUT
