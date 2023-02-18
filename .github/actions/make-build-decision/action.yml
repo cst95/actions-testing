@@ -7,9 +7,9 @@ inputs:
     required: true
 
 outputs:
-  should-build:
+  decision:
     description: "Should a build be executed"
-    value: ${{ steps.decide.outputs.should_build }}
+    value: ${{ steps.decide.outputs.decision }}
 
 runs:
   using: "composite"
@@ -17,11 +17,19 @@ runs:
     - id: get-execution-context
       uses: ./.github/actions/get-execution-context
 
-    - id: decide
-      shell: bash
+    - shell: bash
+      name: summary
       run: |
         echo "Head commit message: ${{ github.event.head_commit.message }}" >> $GITHUB_STEP_SUMMARY
         echo "No bump message: ${{ inputs.no-bump-message }}" >> $GITHUB_STEP_SUMMARY
         echo "Head commit contains no bump message: ${{ contains(github.event.head_commit.message, inputs.no-bump-message) }}" >> $GITHUB_STEP_SUMMARY
-        echo "should_build=${{ steps.get-execution-context.outputs.is-default-branch != 'true' || !contains(github.event.head_commit.message, inputs.no-bump-message) }}" >> $GITHUB_OUTPUT
 
+    - id: decide
+      shell: bash
+      run: |
+        if [[ ${{ steps.get-execution-context.outputs.is-default-branch == 'true' && contains(github.event.head_commit.message, inputs.no-bump-message) }} ]]
+        then
+          echo "decision=skip" >> $GITHUB_OUTPUT
+        else
+          echo "decision=build" >> $GITHUB_OUTPUT
+        fi
