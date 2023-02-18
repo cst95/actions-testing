@@ -17,10 +17,6 @@ runs:
     - id: get-execution-context
       uses: ./.github/actions/get-execution-context
 
-    - if: steps.get-execution-context.outputs.is-default-branch != 'true'
-      shell: bash
-      run: echo "should_build=false" >> $GITHUB_OUTPUT
-
     - if: steps.get-execution-context.outputs.is-default-branch == 'true'
       id: decide
       shell: bash
@@ -29,3 +25,7 @@ runs:
         echo "No bump message: ${{ inputs.no-bump-message }}" >> $GITHUB_STEP_SUMMARY
         echo "Head commit contains no bump message: ${{ contains(github.event.head_commit.message, inputs.no-bump-message) }}" >> $GITHUB_STEP_SUMMARY
         echo "should_build=${{ contains(github.event.head_commit.message, inputs.no-bump-message) }}" >> $GITHUB_OUTPUT
+
+    - if: steps.get-execution-context.outputs.is-default-branch != 'true'
+      shell: bash
+      run: echo "should_build=false" >> $GITHUB_OUTPUT
