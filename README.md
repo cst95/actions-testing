@@ -1,3 +1,3 @@
 # Actions Testing
 
-Repository for testing Github Actions. Dummy.
+Repository for testing Github Actions. 
