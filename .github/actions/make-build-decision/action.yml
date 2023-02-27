@@ -21,16 +21,14 @@ runs:
       id: get-head-commit
       name: summary
       run: |
-        echo "Head commit message: ${{ github.event.head_commit.message }}" >> $GITHUB_STEP_SUMMARY
-        echo "Head commit message (workflow run): ${{ github.event.workflow_run.head_commit.message }}" >> $GITHUB_STEP_SUMMARY
         echo "No bump message: ${{ inputs.no-bump-message }}" >> $GITHUB_STEP_SUMMARY
-        echo "Head commit contains no bump message: ${{ contains(github.event.head_commit.message, inputs.no-bump-message) }}" >> $GITHUB_STEP_SUMMARY
         echo "head_commit_message=${{ github.event.head_commit.message || github.event.workflow_run.head_commit.message }}" >> $GITHUB_OUTPUT
+        echo "Head commit message: $head_commit_message" >> $GITHUB_STEP_SUMMARY
+        echo "Head commit contains no bump message: ${{ contains($head_commit_message, inputs.no-bump-message) }}" >> $GITHUB_STEP_SUMMARY
 
     - id: decide
       shell: bash
       run: |
-        echo "${{ steps.get-head-commit.outputs.head_commit_message }}" >> $GITHUB_STEP_SUMMARY
         if [[ ${{ steps.get-execution-context.outputs.is-default-branch == 'true' && contains(steps.get-head-commit.outputs.head_commit_message, inputs.no-bump-message) }} == 'true' ]]
         then
           echo "decision=skip" >> $GITHUB_OUTPUT
