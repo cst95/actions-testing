@@ -23,8 +23,8 @@ runs:
       run: |
         echo "No bump message: ${{ inputs.no-bump-message }}" >> $GITHUB_STEP_SUMMARY
         echo "head_commit_message=${{ github.event.head_commit.message || github.event.workflow_run.head_commit.message }}" >> $GITHUB_OUTPUT
-        echo "Head commit message: $head_commit_message" >> $GITHUB_STEP_SUMMARY
-        echo "Head commit contains no bump message: ${{ contains($head_commit_message, inputs.no-bump-message) }}" >> $GITHUB_STEP_SUMMARY
+        echo "Head commit message: ${{ steps.get-head-commit.outputs.head_commit_message }}" >> $GITHUB_STEP_SUMMARY
+        echo "Head commit contains no bump message: ${{ contains(steps.get-head-commit.outputs.head_commit_message, inputs.no-bump-message) }}" >> $GITHUB_STEP_SUMMARY
 
     - id: decide
       shell: bash
