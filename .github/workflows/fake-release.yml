@@ -1,0 +1,12 @@
+name: Fake Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello World from Fake Release"

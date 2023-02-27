@@ -1,10 +1,15 @@
 name: Test reusable workflow
 
 on: 
+  workflow_run:
+    workflows: [ Fake Release ]
+    types: [ completed ]
+    branches: [ main ]
   push:
     branches:
       - main
-  pull_request:      
+  pull_request:
+
 
 jobs:
   check-if-default-branch:
