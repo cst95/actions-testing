@@ -21,6 +21,7 @@ runs:
       name: summary
       run: |
         echo "Head commit message: ${{ github.event.head_commit.message }}" >> $GITHUB_STEP_SUMMARY
+        echo "Head commit message (workflow run): ${{ github.event.workflow_run.head_commit.message }}" >> $GITHUB_STEP_SUMMARY
         echo "No bump message: ${{ inputs.no-bump-message }}" >> $GITHUB_STEP_SUMMARY
         echo "Head commit contains no bump message: ${{ contains(github.event.head_commit.message, inputs.no-bump-message) }}" >> $GITHUB_STEP_SUMMARY
 
